@@ -15,6 +15,9 @@ public class TaskRunner {
             AddCustomer addCustomerDetail = new AddCustomer();
             addCustomerDetail.chooseNoOfRecord();
         }
+        else if (choice==2){
+
+        }
 
     }
 }

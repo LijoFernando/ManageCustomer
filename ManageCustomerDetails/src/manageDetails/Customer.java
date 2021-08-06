@@ -1,21 +1,17 @@
 package manageDetails;
 
-import com.sun.xml.internal.ws.api.ha.StickyFeature;
 
-import javax.annotation.Generated;
 import java.sql.Date;
 
 public class Customer {
 
     //Variable
-    private int Id;
+
     private String name;
     private Date dofBirth;
+    private String location;
 
     //Getter and Setter for name and Date
-    public int getId() {
-        return Id;
-    }
     public String getName() {
         return name;
     }
@@ -28,5 +24,9 @@ public class Customer {
     public void setDofBirth(Date dofBirth) {
         this.dofBirth = dofBirth;
     }
+    public String getLocation() { return location; }
+    public void setLocation(String location) { this.location = location;
+    }
+
 
 }

@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.Scanner;
 
+
 public class AddCustomer {
         Scanner input=new Scanner(System.in);
         Customer customerInput = new Customer();
+        AddAccountInfo accInfoInput = new AddAccountInfo();
         DBConnection dbConnection = new DBConnection();
 
         void chooseNoOfRecord(){
@@ -18,7 +20,6 @@ public class AddCustomer {
         }
         void customerInput(){
 
-
             //customerInput.setDofBirth(inputDate);
             try {
                 System.out.println("Enter Customer Details");
@@ -27,7 +28,10 @@ public class AddCustomer {
                 String name = input.nextLine();
                 System.out.println("Enter Customer Date of Birth(example: 2000-12-3): ");
                 String dateOfBirth = input.nextLine();
-                validateInput(name, dateOfBirth);
+                Date date = Date.valueOf(dateOfBirth);
+                System.out.println("Enter Customer Location: ");
+                String location = input.nextLine();
+                validateInput(name, date, location);
             }
             catch (IOException ioException){
                 System.out.println("Exception");
@@ -35,19 +39,27 @@ public class AddCustomer {
             }
 
         }
-        void validateInput(String name, String dateOfBirth) throws IOException {
+        void validateInput(String name, Date date, String location) throws IOException {
 
-                if (name != null && dateOfBirth != null && dateOfBirth.matches("^[0-9]{4}-[0-3][0-9]-[0-3][0-9]$")) {
-                    Date date = Date.valueOf(dateOfBirth);
+                if (name != null && date != null  && location != null) {
+
                     customerInput.setName(name);
                     customerInput.setDofBirth(date);
-                    insertCustomer(name, date);
+                    customerInput.setLocation(location);
+                    String nameInput = customerInput.getName();
+                    Date dateInput = customerInput.getDofBirth();
+                    String locationInput = customerInput.getLocation();
+                    accInfoInput.AccountInput();
+                    try {
+                        dbConnection.insertDetailToDB(nameInput, dateInput, locationInput);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+                else{
+                    System.out.println("Enter all the field");
                 }
 
-
-
         }
-        void insertCustomer(String name,Date date){
-            dbConnection.insertDetailToDB(name, date);
-        }
+
 }
