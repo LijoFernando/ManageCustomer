@@ -7,8 +7,7 @@ import java.sql.Date;
 
 public class Customer {
 
-
-    //Variables
+    //Variable
     private int Id;
     private String name;
     private Date dofBirth;
@@ -17,20 +16,15 @@ public class Customer {
     public int getId() {
         return Id;
     }
-
-
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public Date getDofBirth() {
         return dofBirth;
     }
-
     public void setDofBirth(Date dofBirth) {
         this.dofBirth = dofBirth;
     }
