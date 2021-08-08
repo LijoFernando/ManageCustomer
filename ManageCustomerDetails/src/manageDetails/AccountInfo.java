@@ -6,10 +6,9 @@ public class AccountInfo {
     private int AccBalance;
     private String AccBranch;
 
-    //Getter Setter Methods for Varaiables
-    public int getAccNo() {
-        return AccNo;
-    }
+    //Getter Setter Methods for Variables
+    public int getAccNo() { return AccNo; }
+
     public void setAccNo(int accNo) {
         AccNo = accNo;
     }

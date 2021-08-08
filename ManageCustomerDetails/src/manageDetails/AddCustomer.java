@@ -1,65 +1,56 @@
 package manageDetails;
 
-import java.io.IOException;
 import java.sql.Date;
-import java.util.Scanner;
-
+import java.util.*;
 
 public class AddCustomer {
-        Scanner input=new Scanner(System.in);
+        Scanner input = new Scanner(System.in);
         Customer customerInput = new Customer();
-        AddAccountInfo accInfoInput = new AddAccountInfo();
-        DBConnection dbConnection = new DBConnection();
+        DBOperation dbOperation = new DBOperation();
 
         void chooseNoOfRecord(){
             System.out.print("Enter No of Record to insert: ");
-            int noOfRecord=input.nextInt();
+            int noOfRecord = input.nextInt();
             for(int i=0; i<noOfRecord; i++){
                 this.customerInput();
             }
         }
-        void customerInput(){
 
+        void customerInput(){
             //customerInput.setDofBirth(inputDate);
-            try {
+
                 System.out.println("Enter Customer Details");
                 System.out.println("Enter Customer Name: ");
                 input.nextLine();
                 String name = input.nextLine();
                 System.out.println("Enter Customer Date of Birth(example: 2000-12-3): ");
                 String dateOfBirth = input.nextLine();
-                Date date = Date.valueOf(dateOfBirth);
-                System.out.println("Enter Customer Location: ");
+                System.out.println("Enter the location: ");
                 String location = input.nextLine();
-                validateInput(name, date, location);
-            }
-            catch (IOException ioException){
-                System.out.println("Exception");
-                ioException.printStackTrace();
-            }
+                validateInput(name, dateOfBirth,location );
+
 
         }
-        void validateInput(String name, Date date, String location) throws IOException {
 
-                if (name != null && date != null  && location != null) {
-
+        void validateInput(String name, String dateOfBirth, String location) {
+                if(name != null && dateOfBirth != null
+                        && dateOfBirth.matches("^[0-9]{4}-[0-3][0-9]-[0-3][0-9]$")) {
+                    try {
+                    Date date = Date.valueOf(dateOfBirth);
                     customerInput.setName(name);
                     customerInput.setDofBirth(date);
                     customerInput.setLocation(location);
-                    String nameInput = customerInput.getName();
-                    Date dateInput = customerInput.getDofBirth();
-                    String locationInput = customerInput.getLocation();
-                    accInfoInput.AccountInput();
-                    try {
-                        dbConnection.insertDetailToDB(nameInput, dateInput, locationInput);
-                    }catch (Exception e){
+                    String inputName = customerInput.getName();
+                    Date inputDate = customerInput.getDofBirth();
+                    String inputLocation = customerInput.getLocation();
+                    dbOperation.insertDetailToDB(inputName, inputDate, inputLocation);
+                    } catch (Exception e) {
                         e.printStackTrace();
+                        System.out.println("SQL Exception Occurs :" + e);
+
+
                     }
-                }
-                else{
-                    System.out.println("Enter all the field");
                 }
 
         }
-
 }
