@@ -4,6 +4,13 @@ import  java.sql.*;
 public class DBOperation {
 
     DBConnector dbConnector = new DBConnector();
+//    void fetchAccInfo(){
+//        String getQuery="";
+//        try{
+//            dbConnector.prepStatement(getQuery)
+//        }
+//
+//    }
 
     void insertDetailToDB(String name, Date date, String location) throws  Exception  {
             String query="insert into CustomerInfo (CusName, CusDoB, Location) values (?, ?, ?)";

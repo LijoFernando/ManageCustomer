@@ -1,16 +1,29 @@
 package manageDetails;
 
+import java.util.Random;
+
 public class AccountInfo {
     //variables
     private int AccNo;
     private int AccBalance;
     private String AccBranch;
 
+
+    public  AccountInfo(int accNo,int accBalance,String accBranch){
+        AccNo = accNo;
+        AccBalance = accBalance;
+        AccBranch = accBranch;
+    }
+
     //Getter Setter Methods for Variables
-    public int getAccNo() { return AccNo; }
+    public int getAccNo() {
+        return AccNo; }
 
     public void setAccNo(int accNo) {
-        AccNo = accNo;
+        Random random = new Random();
+
+        AccNo = (int) (10001 + Math.random());
+
     }
 
     public int getAccBalance() {

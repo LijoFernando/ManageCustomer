@@ -6,10 +6,10 @@ import java.sql.Date;
 public class Customer {
 
     //Variable
-
     private String name;
     private Date dofBirth;
     private String location;
+
 
     //Getter and Setter for name and Date
     public String getName() {

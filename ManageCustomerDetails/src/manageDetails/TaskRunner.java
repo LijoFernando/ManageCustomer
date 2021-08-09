@@ -18,7 +18,8 @@ public class TaskRunner {
         int choice = input.nextInt();
 
         if(choice==1) {
-             addCustomerDetail.chooseNoOfRecord();
+             //addCustomerDetail.chooseNoOfRecord();
+            addAccountInfo.AccountInput();
         }
         else if (choice==2){
 

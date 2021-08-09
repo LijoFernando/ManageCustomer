@@ -1,9 +1,6 @@
 package manageDetails;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class DBConnector {
     public static Connection getConnection() throws SQLException {
@@ -14,4 +11,5 @@ public class DBConnector {
         PreparedStatement preparedStatement = getConnection().prepareStatement(query);
         return preparedStatement;
     }
+
 }

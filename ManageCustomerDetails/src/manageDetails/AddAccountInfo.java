@@ -5,10 +5,11 @@ import java.util.Scanner;
 
 public class AddAccountInfo {
     Scanner input = new Scanner(System.in);
-    AccountInfo accountInfoInput = new AccountInfo();
+    AccountInfo accountInfoInput = null;
     DBOperation dbOperation = new DBOperation();
 
     void findCusId(){
+
     }
 
     void AccountInput( ){
@@ -24,15 +25,13 @@ public class AddAccountInfo {
     void insertAccountDB(Integer accNumber, Integer accBalance, String accBranch)  {
         try {
             if (accNumber != null && accBalance != null && accBranch != null) {
-                accountInfoInput.setAccNo(accNumber);
-                accountInfoInput.setAccBalance(accBalance);
-                accountInfoInput.setAccBranch(accBranch);
+                accountInfoInput = new AccountInfo(accNumber,accBalance,accBranch);
                 int accNoInput = accountInfoInput.getAccNo();
                 int accBalanceInput = accountInfoInput.getAccBalance();
                 String accBranchInput = accountInfoInput.getAccBranch();
                 dbOperation.insertAccountToDB(accNoInput, accBalanceInput, accBranchInput);
             }
-        }catch (SQLException e){
+        } catch (SQLException e){
             e.printStackTrace();
         }
     }
