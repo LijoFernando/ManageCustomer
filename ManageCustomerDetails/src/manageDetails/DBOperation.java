@@ -4,14 +4,20 @@ import  java.sql.*;
 public class DBOperation {
 
     DBConnector dbConnector = new DBConnector();
-//    void fetchAccInfo(){
-//        String getQuery="";
-//        try{
-//            dbConnector.prepStatement(getQuery)
-//        }
-//
-//    }
+    ResultSet resultSet =null;
+    
+    public  ResultSet loadHMapFromDB(){
+        String query="SELECT * FROM AccountInfo";
+        try{
+            resultSet = dbConnector.prepStatement(query).executeQuery();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultSet;
+    }
 
+    
+    //insert Customer Info to Database
     void insertDetailToDB(String name, Date date, String location) throws  Exception  {
             String query="insert into CustomerInfo (CusName, CusDoB, Location) values (?, ?, ?)";
             try {
@@ -28,13 +34,15 @@ public class DBOperation {
 
             }
     }
-
-    void insertAccountToDB(Integer accNo, Integer accBalance, String accBranch) throws  SQLException{
-            String query2 = "insert into AccountInfo (CusName, CusDoB, Location) values (?, ?, ?)";
+    
+    //Insert AccountInfo to Database
+    void insertAccountToDB(Integer accNo, Integer accBalance, String accBranch,int cusId) throws  SQLException{
+            String query2 = "insert into AccountInfo (AccNumber, AccBalance, Branch ) values (?, ?, ?)";
             try {
                 dbConnector.prepStatement(query2).setInt(1,accNo );
                 dbConnector.prepStatement(query2).setInt(2, accBalance );
                 dbConnector.prepStatement(query2).setString(3, accBranch);
+                dbConnector.prepStatement(query2).setInt(4,cusId);
                 dbConnector.prepStatement(query2).executeUpdate();
                 System.out.println("Account Record inserted");
             } catch (SQLException e) {
