@@ -10,7 +10,7 @@ public class AddAccountInfo {
     void  AccountInput(Integer cusID ){
         System.out.println("Enter the Account  Number: ");
         int accNumber = input.nextInt();
-        System.out.println("Enter the Accoount Balance: ");
+        System.out.println("Enter the Account Balance: ");
         int accBalance = input.nextInt();
         input.nextLine();
         System.out.println("Enter the Branch Name: ");

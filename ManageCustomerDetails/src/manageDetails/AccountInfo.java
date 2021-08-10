@@ -12,36 +12,7 @@ public class AccountInfo {
     private String AccBranch;
     private int CusId;
 
-    public AccountInfo(){}
-    public AccountInfo(int accNo,int accBalance,String accBranch){
-        AccNo = accNo;
-        AccBalance = accBalance;
-        AccBranch = accBranch;
 
-    }
-    public AccountInfo(int accId,int accNo,int accBalance,String accBranch){
-        AccId =accId;
-        AccNo = accNo;
-        AccBalance = accBalance;
-        AccBranch = accBranch;
-
-    }
-
-    public AccountInfo(int accNo,int accBalance,String accBranch, int cusID){
-
-        AccNo = accNo;
-        AccBalance = accBalance;
-        AccBranch = accBranch;
-        CusId = cusID;
-    }
-
-    public  AccountInfo(int accId, int accNo,int accBalance,String accBranch,int cusID){
-        AccId = accId;
-        AccNo = accNo;
-        AccBalance = accBalance;
-        AccBranch = accBranch;
-        CusId = cusID;
-    }
 
     //Getter Setter Methods for Variables
     public int getAccId() {

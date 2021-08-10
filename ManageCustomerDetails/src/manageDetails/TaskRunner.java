@@ -32,8 +32,10 @@ public class TaskRunner {
             addAccountInfo.AccountInput(cusId);
         }
         else if(choice==3){
-            new LoadData();
-            syncHashMap.printMap();
+            syncHashMap.loadHashMap();
+
+
+
         }
         else if(choice==4) {
             System.out.println("Enter id: ");
