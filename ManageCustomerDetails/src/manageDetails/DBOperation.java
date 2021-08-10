@@ -1,15 +1,18 @@
 package manageDetails;
+import javax.swing.plaf.nimbus.State;
 import  java.sql.*;
 
 public class DBOperation {
 
     DBConnector dbConnector = new DBConnector();
     ResultSet resultSet =null;
+    PreparedStatement ps=null;
     
-    public  ResultSet loadHMapFromDB(){
+    public ResultSet loadHMapFromDB(){
         String query="SELECT * FROM AccountInfo";
         try{
-            resultSet = dbConnector.prepStatement(query).executeQuery();
+            ps = dbConnector.getConnection().prepareStatement(query);
+            resultSet = ps.executeQuery();
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -18,13 +21,19 @@ public class DBOperation {
 
     
     //insert Customer Info to Database
-    void insertDetailToDB(String name, Date date, String location) throws  Exception  {
+    public int insertDetailToDB(String name, Date date, String location) throws  Exception  {
             String query="insert into CustomerInfo (CusName, CusDoB, Location) values (?, ?, ?)";
+            int cusID=0;
             try {
-                dbConnector.prepStatement(query).setString(1, name);
-                dbConnector.prepStatement(query).setDate(2, date);
-                dbConnector.prepStatement(query).setString(3, location);
-                dbConnector.prepStatement(query).executeUpdate();
+                ps = dbConnector.getConnection().prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
+                ps.setString(1, name);
+                ps.setDate(2, date);
+                ps.setString(3, location);
+                ps.executeUpdate();
+                ResultSet rs = ps.getGeneratedKeys();
+                if(rs.next()) {
+                    cusID = rs.getInt(1);
+                }
                 System.out.println("Customer Record inserted");
             } catch (SQLException  e) {
                 e.printStackTrace();
@@ -33,17 +42,19 @@ public class DBOperation {
                 dbConnector.getConnection().close();
 
             }
+            return cusID;
     }
     
     //Insert AccountInfo to Database
-    void insertAccountToDB(Integer accNo, Integer accBalance, String accBranch,int cusId) throws  SQLException{
-            String query2 = "insert into AccountInfo (AccNumber, AccBalance, Branch ) values (?, ?, ?)";
+    void insertAccountToDB(Integer accNo, Integer accBalance, String accBranch,Integer cusId) throws  SQLException{
+            String query2 = "insert into AccountInfo (AccNumber, AccBalance, Branch, CusID ) values (?, ?, ?,?)";
             try {
-                dbConnector.prepStatement(query2).setInt(1,accNo );
-                dbConnector.prepStatement(query2).setInt(2, accBalance );
-                dbConnector.prepStatement(query2).setString(3, accBranch);
-                dbConnector.prepStatement(query2).setInt(4,cusId);
-                dbConnector.prepStatement(query2).executeUpdate();
+                ps = dbConnector.getConnection().prepareStatement(query2);
+                ps.setInt(1,accNo );
+                ps.setInt(2, accBalance );
+                ps.setString(3, accBranch);
+                ps.setInt(4,cusId);
+                ps.executeUpdate();
                 System.out.println("Account Record inserted");
             } catch (SQLException e) {
                 e.printStackTrace();

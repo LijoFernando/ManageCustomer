@@ -11,7 +11,7 @@ public class AddCustomer {
         AddAccountInfo accInfoInput = new AddAccountInfo();
         DBOperation dbConnection = new DBOperation();
 
-        void chooseNoOfRecord(){
+        public void chooseNoOfRecord(){
             System.out.print("Enter No of Record to insert: ");
             int noOfRecord=input.nextInt();
             for(int i=0; i<noOfRecord; i++){
@@ -20,7 +20,6 @@ public class AddCustomer {
         }
         void customerInput(){
 
-            //customerInput.setDofBirth(inputDate);
             try {
                 System.out.println("Enter Customer Details");
                 System.out.println("Enter Customer Name: ");
@@ -41,6 +40,7 @@ public class AddCustomer {
         }
         void validateInput(String name, Date date, String location) throws IOException {
                 if (name != null && date != null  && location != null) {
+
                     customerInput.setName(name);
                     customerInput.setDofBirth(date);
                     customerInput.setLocation(location);
@@ -49,12 +49,13 @@ public class AddCustomer {
                     String locationInput = customerInput.getLocation();
 
                     try {
-                        dbConnection.insertDetailToDB(nameInput, dateInput, locationInput);
+                        int cusID = dbConnection.insertDetailToDB(nameInput, dateInput, locationInput);
+                        accInfoInput.AccountInput(cusID);
 
-                    }catch (Exception e){
+                    }   catch (Exception e){
                         e.printStackTrace();
                     }
-                    accInfoInput.AccountInput();
+
                 }
                 else{
                     System.out.println("Enter all the field");
