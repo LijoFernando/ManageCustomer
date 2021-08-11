@@ -1,14 +1,13 @@
 package manageDetails;
-import javax.swing.plaf.nimbus.State;
+import jdk.jfr.internal.JVMSupport;
+
 import  java.sql.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DBOperation {
 
 
-    public static HashMap<Integer,AccountInfo> innerHashMap = new  HashMap<>();
-    public static HashMap<Integer,HashMap> outerHashMap = new HashMap<>();
+
 
     private  Connection con;
     private  void loadConnection() throws SQLException {
@@ -24,32 +23,30 @@ public class DBOperation {
     }
 
     public HashMap loadHMapFromDB(){
-
+        HashMap<Integer,AccountInfo> innerHasMap = new HashMap<>();
+        HashMap<Integer,HashMap > outerHashMap = new HashMap<>();
         PreparedStatement ps = null;
         ResultSet rs;
-        ResultSetMetaData resultSetMetaData  = null;
         String query="SELECT * FROM AccountInfo";
         try{
             ps = getConnection().prepareStatement(query);
             rs = ps.executeQuery();
 
             while(rs.next()) {
-
-                int accNo =rs.getInt(1);
+                int accNo = rs.getInt(2);
                 int cusId = rs.getInt(5);
                 AccountInfo accountInfo =new AccountInfo();
                 accountInfo.setAccNo(rs.getInt(2));
                 accountInfo.setAccBalance(rs.getInt(3));
                 accountInfo.setAccBranch(rs.getString(4));
                 accountInfo.setCusId(rs.getInt(5));
-                    if(!outerHashMap.containsKey(cusId)){
-                        innerHashMap.put(accNo, accountInfo);
-                        outerHashMap.put(cusId,innerHashMap);
-                    }
-                    else if(outerHashMap.containsKey(cusId)){
-                        innerHashMap.put(accNo,accountInfo);
-
-                    }
+                if (outerHashMap.keySet().contains(cusId)) {
+                    outerHashMap.get(cusId).put(accNo,accountInfo);
+                }
+                else {
+                    outerHashMap.put(cusId, new HashMap<Integer,AccountInfo>());
+                    outerHashMap.get(cusId).put(accNo,accountInfo);
+                }
 
             }
 
@@ -59,13 +56,8 @@ public class DBOperation {
         }return outerHashMap;
 
     }
-//    public void loadHmSpecAccount(Integer cusID,Integer accNo,AccountInfo accountInfo){
-//
-//        if(cusID == accountInfo.getCusId() ){
-//            innerHashMap.put(accNo,accountInfo);
-//        }
-//
-//    }
+
+
 
     
     //insert Customer Info to Database
