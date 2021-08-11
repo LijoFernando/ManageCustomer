@@ -1,8 +1,11 @@
 package manageDetails;
 import jdk.jfr.internal.JVMSupport;
+import org.omg.CORBA.INTERNAL;
 
 import  java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class DBOperation {
 
@@ -22,39 +25,37 @@ public class DBOperation {
 
     }
 
-    public HashMap loadHMapFromDB(){
-        HashMap<Integer,AccountInfo> innerHasMap = new HashMap<>();
-        HashMap<Integer,HashMap > outerHashMap = new HashMap<>();
+        public ArrayList<AccountInfo> loadHMapFromDB(){
+        ArrayList<AccountInfo> accountInfoArray= new ArrayList<>();
         PreparedStatement ps = null;
+        AccountInfo accountInfo =null;
         ResultSet rs;
         String query="SELECT * FROM AccountInfo";
         try{
             ps = getConnection().prepareStatement(query);
             rs = ps.executeQuery();
-
-            while(rs.next()) {
-                int accNo = rs.getInt(2);
-                int cusId = rs.getInt(5);
-                AccountInfo accountInfo =new AccountInfo();
-                accountInfo.setAccNo(rs.getInt(2));
-                accountInfo.setAccBalance(rs.getInt(3));
-                accountInfo.setAccBranch(rs.getString(4));
-                accountInfo.setCusId(rs.getInt(5));
-                if (outerHashMap.keySet().contains(cusId)) {
-                    outerHashMap.get(cusId).put(accNo,accountInfo);
+            try {
+                while (rs.next()) {
+                    accountInfo = new AccountInfo();
+                    accountInfo.setAccId(rs.getInt(1));
+                    accountInfo.setAccNo(rs.getInt(2));
+                    accountInfo.setAccBalance(rs.getInt(3));
+                    accountInfo.setAccBranch(rs.getString(4));
+                    accountInfo.setCusId(rs.getInt(5));
+                    accountInfoArray.add(accountInfo);
                 }
-                else {
-                    outerHashMap.put(cusId, new HashMap<Integer,AccountInfo>());
-                    outerHashMap.get(cusId).put(accNo,accountInfo);
-                }
-
             }
-
+            finally {
+                rs.close();
+                ps.close();
+            }
 
         } catch (Exception e){
             e.printStackTrace();
-        }return outerHashMap;
 
+        }
+
+        return  accountInfoArray;
     }
 
 
@@ -62,7 +63,7 @@ public class DBOperation {
     
     //insert Customer Info to Database
     public int insertDetailToDB(String name, Date date, String location) throws  Exception  {
-            PreparedStatement  ps =null;
+            PreparedStatement  ps = null;
             ResultSet rs = null;
             String query="insert into CustomerInfo (CusName, CusDoB, Location) values (?, ?, ?)";
             int cusID=0;

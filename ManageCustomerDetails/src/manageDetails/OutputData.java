@@ -11,4 +11,5 @@ public class OutputData {
         System.out.println("\nAccId: "+accountInfo.getAccId()+", AccNo: "+accountInfo.getAccNo()+", AccBalance: "+accountInfo.getAccBalance()+", BankBranch: "+accountInfo.getAccBranch());
 
     }
+
 }

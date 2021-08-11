@@ -1,49 +1,52 @@
 package manageDetails;
 
-import java.io.IOException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 
 public class LoadData {
-    HashMap<Integer, AccountInfo> hashMap1 = new HashMap<>();
-    HashMap<Integer,HashMap<Integer,AccountInfo>> hashMap2= new HashMap<>();
-    ArrayList<AccountInfo> outputAryList = new ArrayList();
-    DBOperation dbOperation = new DBOperation();
-    OutputData outputData = new OutputData();
-    AccountInfo accInfo;
 
-    int count=1;
+    HashMap <Integer,HashMap<Integer,AccountInfo>> outerHashMap = null;
+
+    DBOperation dbOperation = null;
+    OutputData outputData = new OutputData();
+
+
     public void loadHashMap(){
-        HashMap<Integer,HashMap> outerHashMap = dbOperation.loadHMapFromDB();
-        //HashMap<Integer,AccountInfo> infoHashMap =
-        System.out.println(outerHashMap.get(1));
+        //load hashMap from DB
+        ArrayList<AccountInfo> dbArrayList = new ArrayList<>();
+        dbOperation = new DBOperation();
+        outerHashMap =new HashMap<>();
+        dbArrayList = dbOperation.loadHMapFromDB();
+        for (AccountInfo i:dbArrayList) {
+
+            if (outerHashMap.keySet().contains(i.getCusId())) {
+                outerHashMap.get(i.getCusId()).put(i.getAccId(),i);
+            }
+            else
+            {
+                outerHashMap.put(i.getCusId() , new HashMap<>());
+                outerHashMap.get(i.getCusId()).put(i.getAccId(),i);
+            }
+        }
+        System.out.println(outerHashMap.entrySet());
+    }
+
+    public void loadSpecific(int cusId)  {
+        loadHashMap();
+        ArrayList<String> arrayList = new ArrayList<>();
+        //System.out.println(outerHashMap.get(cusId).values());
+        arrayList.add(outerHashMap.get(cusId).values().toString());
+        for (int i = 0; i < arrayList.size(); i++) {
+            //System.out.println(i);
+          //  System.out.println("("+arrayList.get(i)+")");
+        }
 
 
     }
 
-
-
-    public void loadSpecific(int cusId) throws IOException {
-        AccountInfo accountInfo = null;
-        ArrayList<AccountInfo> arrayList =null;
-        if(hashMap2.containsKey(cusId))  {
-             for (Integer i : hashMap1.keySet()) {
-                    if (cusId == hashMap1.get(i).getCusId()) {
-                       // accountInfo = new AccountInfo(hashMap1.get(i).getAccNo(), hashMap1.get(i).getAccBalance(), hashMap1.get(i).getAccBranch());
-                        outputData.printSortedAccList(count, accountInfo);
-                    }
-             }
-        }
-   }
-
     public void printMap(){
-        for(Integer i:hashMap1.keySet()){
-           // accInfo = new AccountInfo(hashMap1.get(i).getAccId(), hashMap1.get(i).getAccNo(),hashMap1.get(i).getAccBalance(),hashMap1.get(i).getAccBranch());
-            outputData.printAllAccList(accInfo);
-        }
+
     }
 
 }

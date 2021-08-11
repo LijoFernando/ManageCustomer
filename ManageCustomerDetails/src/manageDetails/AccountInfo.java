@@ -51,7 +51,11 @@ public class AccountInfo {
         CusId = cusId;
     }
 
+    @Override
+    public String toString(){
+        return getAccNo()+", "+getAccBalance()+", "+getAccBranch()+", "+getCusId();
 
+    }
 
 
 }

@@ -7,18 +7,18 @@ import java.util.Scanner;
 
 public class AddCustomer {
         Scanner input=new Scanner(System.in);
-        Customer customerInput = new Customer();
-        AddAccountInfo accInfoInput = new AddAccountInfo();
+        Customer customerInput = null;
+        AddAccountInfo accInfoInput = null;
         DBOperation dbConnection = new DBOperation();
 
-        public void chooseNoOfRecord(){
+        public void enterNoOfCustomer(){
             System.out.print("Enter No of Record to insert: ");
             int noOfRecord=input.nextInt();
             for(int i=0; i<noOfRecord; i++){
                 this.customerInput();
             }
         }
-        void customerInput(){
+        private void customerInput(){
 
             try {
                 System.out.println("Enter Customer Details");
@@ -38,9 +38,9 @@ public class AddCustomer {
             }
 
         }
-        void validateInput(String name, Date date, String location) throws IOException {
+        private void validateInput(String name, Date date, String location) throws IOException {
                 if (name != null && date != null  && location != null) {
-
+                    customerInput = new Customer();
                     customerInput.setName(name);
                     customerInput.setDofBirth(date);
                     customerInput.setLocation(location);
@@ -50,6 +50,7 @@ public class AddCustomer {
 
                     try {
                         int cusID = dbConnection.insertDetailToDB(nameInput, dateInput, locationInput);
+                        accInfoInput = new AddAccountInfo();
                         accInfoInput.AccountInput(cusID);
 
                     }   catch (Exception e){

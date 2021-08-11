@@ -4,10 +4,10 @@ import java.util.Scanner;
 
 public class AddAccountInfo {
     Scanner input = new Scanner(System.in);
-    AccountInfo accountInfoInput = new AccountInfo();
+    AccountInfo accountInfoInput =null ;
     DBOperation dbConnection = new DBOperation();
 
-    void  AccountInput(Integer cusID ){
+    public void AccountInput(Integer cusID ){
         System.out.println("Enter the Account  Number: ");
         int accNumber = input.nextInt();
         System.out.println("Enter the Account Balance: ");
@@ -19,8 +19,9 @@ public class AddAccountInfo {
         insertAccountDB(accNumber, accBalance,  accBranch, cusID);
     }
 
-    void insertAccountDB(Integer accNumber, Integer accBalance, String accBranch, Integer cusId)  {
+    private void insertAccountDB(Integer accNumber, Integer accBalance, String accBranch, Integer cusId)  {
         if(accNumber!=null && accBalance !=null && accBranch!=null){
+            accountInfoInput =new AccountInfo();
             accountInfoInput.setAccNo(accNumber);
             accountInfoInput.setAccBalance(accBalance);
             accountInfoInput.setAccBranch(accBranch);
