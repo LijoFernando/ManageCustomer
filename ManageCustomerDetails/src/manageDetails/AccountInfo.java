@@ -4,7 +4,6 @@ import java.util.Random;
 
 public class AccountInfo {
 
-
     //variables
     private int AccId;
     private int AccNo;
@@ -12,19 +11,15 @@ public class AccountInfo {
     private String AccBranch;
     private int CusId;
 
-
-
     //Getter Setter Methods for Variables
     public int getAccId() {
         return AccId;
     }
-
     public void setAccId(int accId) {
         AccId = accId;
     }
-    public int getAccNo() {
-        return AccNo; }
 
+    public int getAccNo() { return AccNo; }
     public void setAccNo(int accNo) {
                AccNo = accNo;
    }
@@ -32,7 +27,6 @@ public class AccountInfo {
     public int getAccBalance() {
         return AccBalance;
     }
-
     public void setAccBalance(int accBalance) {
         AccBalance = accBalance;
     }
@@ -40,10 +34,10 @@ public class AccountInfo {
     public String getAccBranch() {
         return AccBranch;
     }
-
     public void setAccBranch(String accBranch) {
         AccBranch = accBranch;
     }
+
     public int getCusId() {
         return CusId;
     }
@@ -52,9 +46,8 @@ public class AccountInfo {
     }
 
     @Override
-    public String toString(){
-        return getAccNo()+", "+getAccBalance()+", "+getAccBranch()+", "+getCusId();
-
+    public String toString() {
+        return "["+getAccNo()+", "+getAccBalance()+", "+getAccBranch()+", "+getCusId()+"]";
     }
 
 
