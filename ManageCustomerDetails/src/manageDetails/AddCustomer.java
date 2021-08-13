@@ -40,30 +40,31 @@ public class AddCustomer {
                     System.out.println("Enter Customer Location: ");
                     String location = input.nextLine();
                     validateInput(name, date, location,noOfRecords);
-                } catch(IllegalArgumentException e){
-                    throw  new MyException("Input format is not valid",e);
+                } catch (IllegalArgumentException e){
+                    throw new MyException("Input format is not valid",e);
+                } catch (Exception e){
+                    throw new MyException("Other Exception");
                 }
 
         }
 
         public void validateInput(String name, Date date, String location,Integer nthRecord) throws MyException {
-                    customerInput = new Customer();
-                    customerInput.setName(name);
-                    customerInput.setDofBirth(date);
-                    customerInput.setLocation(location);
-                    nameInput [nthRecord] =customerInput.getName();
-                    dateInput [nthRecord] = customerInput.getDofBirth();
-                    locationInput [nthRecord] = customerInput.getLocation();
-                    if (nthRecord == (name.length())) {
-                        try {
-                            int cusID = dbConnection.insertDetailToDB(nameInput, dateInput, locationInput);
-                            accInfoInput = new AddAccountInfo();
-                            accInfoInput.AccountInput(cusID);
-
-                        } catch (SQLException  e){
-                             throw new MyException("DB Not inserted",e);
-                        }
+                customerInput = new Customer();
+                customerInput.setName(name);
+                customerInput.setDofBirth(date);
+                customerInput.setLocation(location);
+                nameInput [nthRecord] = customerInput.getName();
+                dateInput [nthRecord] = customerInput.getDofBirth();
+                locationInput [nthRecord] = customerInput.getLocation();
+                if (nthRecord == (name.length())) {
+                    try {
+                        int cusID = dbConnection.insertDetailToDB(nameInput, dateInput, locationInput);
+                        accInfoInput = new AddAccountInfo();
+                        accInfoInput.AccountInput(cusID);
+                    } catch (SQLException  e){
+                         throw new MyException("DB Not inserted",e);
                     }
+                }
         }
 }
 

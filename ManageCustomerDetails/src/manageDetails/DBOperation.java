@@ -22,7 +22,7 @@ public class DBOperation {
         ArrayList<AccountInfo> accountInfoArray = new ArrayList<>();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String query = "//SELECT * FROM AccountInfo";
+        String query = "SELECT * FROM AccountInfo";
         try {
             ps = getConnection().prepareStatement(query);
             rs = ps.executeQuery();
@@ -60,9 +60,8 @@ public class DBOperation {
                       ps.setString(1, name[i]);
                       ps.setDate(2, date[i]);
                       ps.setString(3, location[i]);
+                      ps.executeUpdate();
                   }
-
-                  ps.executeUpdate();
                   rs = ps.getGeneratedKeys();
                   if (rs.next()) {
                       cusID = rs.getInt(1);
@@ -70,6 +69,8 @@ public class DBOperation {
                   System.out.println("Customer Record inserted");
               } catch (SQLException e) {
                   throw  new MyException("Customer Records Submission Unsuccessful");
+              } catch (Exception e){
+                  throw new MyException("Other Exception");
               }
               finally {
                   try {
@@ -85,7 +86,7 @@ public class DBOperation {
     
     //Insert AccountInfo to Database
     public void insertAccountToDB(Integer accNo, Integer accBalance, String accBranch, Integer cusId) throws MyException {
-            String query2 = "//insert into AccountInfo (AccNumber, AccBalance, Branch, CusID ) values (?, ?, ?,?)";
+            String query2 = "insert into accountinfo (AccNumber, AccBalance, Branch, CusID ) values (?, ?, ?,?)";
             PreparedStatement ps = null;
             try {
                 ps = getConnection().prepareStatement(query2);
@@ -97,7 +98,10 @@ public class DBOperation {
                 System.out.println("Account Record inserted");
             } catch (SQLException e) {
                 throw new MyException("Account Detail Submission Failed, Query Error");
-            } finally {
+            } catch (NullPointerException e){
+                throw new MyException("Invalid Customer ID");
+            }
+            finally {
                 try {
                     ps.close();
                 } catch (SQLException e) {

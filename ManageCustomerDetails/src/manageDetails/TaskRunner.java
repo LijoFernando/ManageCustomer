@@ -1,8 +1,6 @@
 package manageDetails;
 
-import sun.awt.X11.XSystemTrayPeer;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -52,7 +50,7 @@ public class TaskRunner {
             } catch (MyException|SQLException e){
                 e.printStackTrace();
                 e.getCause();
-                e.getMessage();
+                System.out.println(e.getMessage());
             }
         }
 
