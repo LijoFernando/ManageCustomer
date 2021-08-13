@@ -12,7 +12,6 @@ public class LoadData {
         //load hashMap from DB
         ArrayList<AccountInfo> dbArrayList = dbOperation.accountInfoRecords();
         try {
-
             for (AccountInfo accountinfo : dbArrayList) {
                 int cusId = accountinfo.getCusId();
                 int accId = accountinfo.getAccNo();

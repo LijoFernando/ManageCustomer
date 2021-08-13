@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.PrimitiveIterator;
 import java.util.Scanner;
 
 
@@ -12,16 +13,25 @@ public class AddCustomer {
         Customer customerInput = null;
         AddAccountInfo accInfoInput = null;
         DBOperation dbConnection = new DBOperation();
+        String[] nameInput;
+        Date[] dateInput;
+        String[] locationInput;
 
-        public void enterNoOfCustomer() throws MyException {
+    public void enterNoOfCustomer() throws MyException {
             System.out.print("Enter No of Record to insert: ");
             int noOfRecord = input.nextInt();
+            nameInput = new String[noOfRecord];
+            dateInput = new Date[noOfRecord];
+            locationInput = new String[noOfRecord];
             for(int i=0; i<noOfRecord; i++){
-                this.customerInput();
+                this.customerInput(i);
             }
-        }
 
-        private void customerInput() throws MyException {
+
+
+    }
+
+        private void customerInput(Integer noOfRecords) throws MyException {
                 try {
                     System.out.println("Enter Customer Details");
                     System.out.println("Enter Customer Name: ");
@@ -32,33 +42,31 @@ public class AddCustomer {
                     Date date = Date.valueOf(dateOfBirth);
                     System.out.println("Enter Customer Location: ");
                     String location = input.nextLine();
-                    validateInput(name, date, location);
+                    validateInput(name, date, location,noOfRecords);
                 } catch(IllegalArgumentException e){
                     throw  new MyException("Input format is not valid",e);
                 }
 
         }
 
-        private void validateInput(String name, Date date, String location) throws MyException {
-                if (name != null && date != null  && location != null ) {
+        public void validateInput(String name, Date date, String location,Integer nthRecord) throws MyException {
                     customerInput = new Customer();
                     customerInput.setName(name);
                     customerInput.setDofBirth(date);
                     customerInput.setLocation(location);
-                    String nameInput = customerInput.getName();
-                    Date dateInput = customerInput.getDofBirth();
-                    String locationInput = customerInput.getLocation();
-                    try {
-                        int cusID = dbConnection.insertDetailToDB(nameInput, dateInput, locationInput);
-                        accInfoInput = new AddAccountInfo();
-                        accInfoInput.AccountInput(cusID);
+                       nameInput [nthRecord] =customerInput.getName();
+                        dateInput [nthRecord] = customerInput.getDofBirth();
+                        locationInput [nthRecord] = customerInput.getLocation();
+                        if (nthRecord == (name.length())) {
+                            try {
+                                int cusID = dbConnection.insertDetailToDB(nameInput, dateInput, locationInput);
+                                accInfoInput = new AddAccountInfo();
+                                accInfoInput.AccountInput(cusID);
 
-                    }   catch (SQLException  e){
-                        throw new MyException("DB Not inserted",e);
-                    }
-                }
-                else {
-                    System.out.println("Enter all the field");
-                }
+                            }   catch (SQLException  e){
+                                throw new MyException("DB Not inserted",e);
+                            }
+                        }
         }
 }
+

@@ -18,7 +18,7 @@ public class AddAccountInfo {
         insertAccountDB(accNumber, accBalance,  accBranch, cusID);
     }
 
-    private void insertAccountDB(Integer accNumber, Integer accBalance, String accBranch, Integer cusId) throws MyException, SQLException {
+    private void insertAccountDB(Integer accNumber, Integer accBalance, String accBranch, Integer cusId) throws MyException {
         if(accNumber != null && accBalance != null && accBranch != null){
             AccountInfo accountInfoInput = new AccountInfo();
             accountInfoInput.setAccNo(accNumber);
@@ -30,9 +30,6 @@ public class AddAccountInfo {
             String accBranchGet = accountInfoInput.getAccBranch();
             int accCusIdGet = accountInfoInput.getCusId();
             dbConnection.insertAccountToDB(accNoGet, accBalanceGet, accBranchGet, accCusIdGet);
-
-
         }
-
     }
 }
