@@ -17,19 +17,16 @@ public class AddCustomer {
         Date[] dateInput;
         String[] locationInput;
 
-    public void enterNoOfCustomer() throws MyException {
-            System.out.print("Enter No of Record to insert: ");
-            int noOfRecord = input.nextInt();
-            nameInput = new String[noOfRecord];
-            dateInput = new Date[noOfRecord];
-            locationInput = new String[noOfRecord];
-            for(int i=0; i<noOfRecord; i++){
-                this.customerInput(i);
-            }
-
-
-
-    }
+         public void enterNoOfCustomer() throws MyException {
+                System.out.print("Enter No of Record to insert: ");
+                int noOfRecord = input.nextInt();
+                nameInput = new String[noOfRecord];
+                dateInput = new Date[noOfRecord];
+                locationInput = new String[noOfRecord];
+                for(int i=0; i<noOfRecord; i++){
+                        this.customerInput(i);
+                }
+        }
 
         private void customerInput(Integer noOfRecords) throws MyException {
                 try {
