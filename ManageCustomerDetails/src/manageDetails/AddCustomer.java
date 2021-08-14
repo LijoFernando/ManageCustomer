@@ -1,10 +1,6 @@
 package manageDetails;
 
-import java.io.IOException;
 import java.sql.Date;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.PrimitiveIterator;
 import java.util.Scanner;
 
 
@@ -41,7 +37,7 @@ public class AddCustomer {
                     String location = input.nextLine();
                     validateInput(name, date, location,noOfRecords);
                 } catch(IllegalArgumentException e){
-                    throw  new MyException("Input format is not valid",e);
+                    throw new MyException("Input format is not valid",e);
                 }
 
         }
@@ -54,16 +50,11 @@ public class AddCustomer {
                     nameInput [nthRecord] =customerInput.getName();
                     dateInput [nthRecord] = customerInput.getDofBirth();
                     locationInput [nthRecord] = customerInput.getLocation();
-                    if (nthRecord == (name.length())) {
-                        try {
-                            int cusID = dbConnection.insertDetailToDB(nameInput, dateInput, locationInput);
-                            accInfoInput = new AddAccountInfo();
-                            accInfoInput.AccountInput(cusID);
-
-                        } catch (SQLException  e){
-                             throw new MyException("DB Not inserted",e);
-                        }
-                    }
+                    // if (nthRecord == (name.length())) {
+                    int[] cusID = dbConnection.insertDetailToDB(nameInput, dateInput, locationInput);
+                    // accInfoInput = new AddAccountInfo();
+                    // accInfoInput.AccountInput(cusID);
+                    // }
         }
 }
 

@@ -30,9 +30,13 @@ public class LoadData {
         }
     }
 
-    public void loadSpecific(Integer cusId) {
-        ArrayList<String> arrayList = new ArrayList<>();
-        arrayList.add(outerHashMap.get(cusId).values().toString());
-        System.out.println(arrayList);
+    public void loadSpecific(Integer cusId) throws MyException {
+        try {
+            ArrayList<String> arrayList = new ArrayList<>();
+            arrayList.add(outerHashMap.get(cusId).values().toString());
+            System.out.println(arrayList);
+        }catch (NullPointerException e){
+            throw  new MyException("Customer ID is Invalid");
+        }
     }
 }

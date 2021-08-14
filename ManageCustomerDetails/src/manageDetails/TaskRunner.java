@@ -1,8 +1,5 @@
 package manageDetails;
 
-import sun.awt.X11.XSystemTrayPeer;
-
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -38,9 +35,7 @@ public class TaskRunner {
                 addCustomerDetail.enterNoOfCustomer();
             }
             catch (MyException e){
-                e.printStackTrace();
-                e.getCause();
-                e.getMessage();
+                System.out.println(e.getMessage());
             }
         }
 
@@ -49,25 +44,26 @@ public class TaskRunner {
                 System.out.println("Enter your customer ID");
                 int cusId = input.nextInt();
                 addAccountInfo.AccountInput(cusId);
-            } catch (MyException|SQLException e){
-                e.printStackTrace();
-                e.getCause();
-                e.getMessage();
+            } catch (MyException e){
+                System.out.println( e.getMessage());
             }
         }
 
         else if(choice == 3){
             System.out.println("Enter id: ");
             int cusId = input.nextInt();
-            syncHashMap.loadSpecific(cusId);
+            try {
+                syncHashMap.loadSpecific(cusId);
+            }catch (MyException e){
+                System.out.println(e.getMessage());
+            }
         }
 
         else if (choice == 4) {
             try {
                 syncHashMap.loadHashMap();
             }catch (MyException e){
-                e.printStackTrace();
-                e.getCause();
+                System.out.println(e.getMessage());
             }
         }
         else {

@@ -7,7 +7,7 @@ public class AddAccountInfo {
     Scanner input = new Scanner(System.in);
     DBOperation dbConnection = new DBOperation();
 
-    public void AccountInput(Integer cusID ) throws MyException, SQLException {
+    public void AccountInput(Integer cusID ) throws MyException {
         System.out.println("Enter the Account  Number: ");
         int accNumber = input.nextInt();
         System.out.println("Enter the Account Balance: ");
